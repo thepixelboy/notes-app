@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require('chalk');
 
 const getNotes = function () {
   return 'Your notes...';
@@ -16,9 +17,9 @@ const addNote = function (title, body) {
       body: body,
     });
     saveNotes(notes);
-    console.log('New note added.');
+    console.log(chalk.green.inverse('New note added.'));
   } else {
-    console.log('Note title already exists.');
+    console.log(chalk.red.inverse('Note title already exists.'));
   }
 };
 
@@ -37,4 +38,18 @@ const loadNotes = function () {
   }
 };
 
-module.exports = { getNotes, addNote };
+const removeNote = function (title) {
+  const notes = loadNotes();
+  const notesToKeep = notes.filter(function (note) {
+    return note.title !== title;
+  });
+
+  if (notesToKeep.length === notes.length) {
+    console.log(chalk.red.inverse('No note found!'));
+  } else {
+    saveNotes(notesToKeep);
+    console.log(chalk.green.inverse('Note removed!'));
+  }
+};
+
+module.exports = { getNotes, addNote, removeNote };
