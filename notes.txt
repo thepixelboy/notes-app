@@ -1,3 +1,0 @@
-My name is Ruben.
-
-This is me appending text to notes.txt using appendFileSync.
